@@ -1,4 +1,4 @@
-import { productsData, faqData, newProductsImages, chatSuggestionsData } from './data.js';
+import { faqData, newProductsImages, chatSuggestionsData, productsData as staticProductsData } from './data.js';
 
 // אלמנטים כלליים
 const tabletContainer = document.getElementById('tabletContainer');
@@ -80,12 +80,13 @@ const cartToggleBtn = document.getElementById('cartToggleBtn');
 const shoppingCartSidebar = document.getElementById('shoppingCartSidebar');
 const closeCartBtn = document.getElementById('closeCartBtn');
 const cartItemCount = document.getElementById('cartItemCount');
-const cartItemsContainer = document.getElementById('cartItemsContainer');
-const cartTotalPrice = document.getElementById('cartTotalPrice');
+const cartTotalItems = document.getElementById('cartTotalItems'); // שינוי: סך הכל פריטים במקום סך הכל מחיר
 const sendOrderWhatsappBtn = document.getElementById('sendOrderWhatsappBtn');
 
 // משתנה גלובלי לסל הקניות
 let cart = [];
+// משתנה גלובלי לנתוני המוצרים שיישלפו מגיליון גוגל
+let productsData = {};
 
 // כתובת קבועה לוואטסאפ
 const WHATSAPP_PHONE_NUMBER = '972508860896'; // מספר טלפון בפורמט בינלאומי ללא +
@@ -255,7 +256,7 @@ function renderProductsForCategory(categoryName, targetGrid) {
             <img src="${product.image}" alt="${product.name}" class="product-image" onerror="this.onerror=null;this.src='https://placehold.co/120x120/f0f0f0/333333?text=No+Image';">
             <h3 class="product-name">${product.name}</h3>
             <p class="product-description">${product.description}</p>
-            <span class="product-price">${product.price.toFixed(2)} ₪</span>
+            <!-- מחיר הוסר מכאן -->
             <button class="add-to-cart-btn" data-product-id="${product.id}">
                 הוסף לסל
                 <i class="fas fa-cart-plus"></i>
@@ -286,7 +287,7 @@ function renderProductsForCategory(categoryName, targetGrid) {
             const productId = this.getAttribute('data-product-id');
             const product = Object.values(productsData).flat().find(p => p.id === productId);
             if (product) {
-                const message = `שלום, אני מעוניין להזמין את המוצר:\n*שם*: ${product.name}\n*תיאור*: ${product.description}\n*מחיר*: ${product.price.toFixed(2)} ₪\nאשמח לפרטים נוספים.`;
+                const message = `שלום, אני מעוניין להזמין את המוצר:\n*שם*: ${product.name}\n*תיאור*: ${product.description}\nאשמח לפרטים נוספים.`; // מחיר הוסר
                 const whatsappUrl = `https://wa.me/${WHATSAPP_PHONE_NUMBER}?text=${encodeURIComponent(message)}`;
                 window.open(whatsappUrl, '_blank');
             }
@@ -347,7 +348,7 @@ function renderProductCatalog(filterCategory = null) {
             <img src="${product.image}" alt="${product.name}" class="product-image" onerror="this.onerror=null;this.src='https://placehold.co/120x120/f0f0f0/333333?text=No+Image';">
             <h3 class="product-name">${product.name}</h3>
             <p class="product-description">${product.description}</p>
-            <span class="product-price">${product.price.toFixed(2)} ₪</span>
+            <!-- מחיר הוסר מכאן -->
             <button class="add-to-cart-btn" data-product-id="${product.id}">
                 הוסף לסל
                 <i class="fas fa-cart-plus"></i>
@@ -377,7 +378,7 @@ function renderProductCatalog(filterCategory = null) {
             const productId = this.getAttribute('data-product-id');
             const product = Object.values(productsData).flat().find(p => p.id === productId);
             if (product) {
-                const message = `שלום, אני מעוניין להזמין את המוצר:\n*שם*: ${product.name}\n*תיאור*: ${product.description}\n*מחיר*: ${product.price.toFixed(2)} ₪\nאשמח לפרטים נוספים.`;
+                const message = `שלום, אני מעוניין להזמין את המוצר:\n*שם*: ${product.name}\n*תיאור*: ${product.description}\nאשמח לפרטים נוספים.`; // מחיר הוסר
                 const whatsappUrl = `https://wa.me/${WHATSAPP_PHONE_NUMBER}?text=${encodeURIComponent(message)}`;
                 window.open(whatsappUrl, '_blank');
             }
@@ -471,11 +472,11 @@ function updateQuantity(productId, change) {
 
 function updateCartDisplay() {
     cartItemsContainer.innerHTML = '';
-    let total = 0;
+    let totalItemsInCart = 0;
 
     if (cart.length === 0) {
         cartItemsContainer.innerHTML = '<p class="empty-cart-message">הסל שלך ריק כרגע.</p>';
-        cartTotalPrice.textContent = '0.00 ₪';
+        cartTotalItems.textContent = '0';
         cartItemCount.textContent = '0';
         return;
     }
@@ -487,7 +488,7 @@ function updateCartDisplay() {
             <img src="${item.image}" alt="${item.name}" class="cart-item-image" onerror="this.onerror=null;this.src='https://placehold.co/60x60/f0f0f0/333333?text=No+Image';">
             <div class="cart-item-details">
                 <div class="cart-item-name">${item.name}</div>
-                <div class="cart-item-price">${(item.price * item.quantity).toFixed(2)} ₪</div>
+                <!-- מחיר פריט בסל הוסר -->
             </div>
             <div class="cart-item-quantity-controls">
                 <button class="quantity-minus" data-id="${item.id}">-</button>
@@ -498,11 +499,11 @@ function updateCartDisplay() {
         `;
         cartItemsContainer.appendChild(cartItemElement);
 
-        total += item.price * item.quantity;
+        totalItemsInCart += item.quantity;
     });
 
-    cartTotalPrice.textContent = `${total.toFixed(2)} ₪`;
-    cartItemCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+    cartTotalItems.textContent = totalItemsInCart;
+    cartItemCount.textContent = totalItemsInCart;
 
     // Attach event listeners for quantity and remove buttons
     cartItemsContainer.querySelectorAll('.quantity-minus').forEach(button => {
@@ -544,9 +545,9 @@ function sendOrderToWhatsApp() {
 
     let orderMessage = "שלום, אני מעוניין להזמין את המוצרים הבאים:\n\n";
     cart.forEach((item, index) => {
-        orderMessage += `${index + 1}. ${item.name} (כמות: ${item.quantity}) - ${item.price.toFixed(2)} ₪ ליחידה\n`;
+        orderMessage += `${index + 1}. ${item.name} (כמות: ${item.quantity})\n`; // מחיר הוסר
     });
-    orderMessage += `\nסה"כ לתשלום: ${cartTotalPrice.textContent}\n\n`;
+    orderMessage += `\nסה"כ פריטים: ${cartTotalItems.textContent}\n\n`; // סך הכל פריטים
     orderMessage += "אשמח לקבל הצעת מחיר ופרטים נוספים.";
 
     const whatsappUrl = `https://wa.me/${WHATSAPP_PHONE_NUMBER}?text=${encodeURIComponent(orderMessage)}`;
@@ -880,6 +881,7 @@ async function updateRecommendedProducts() {
     recommendedProductsContainer.innerHTML = '';
 
     const numberOfRecommendations = 6;
+    // וודא ש productsData כבר טעון לפני יצירת availableItems
     const allProductNames = Object.values(productsData).flat().map(p => p.name);
     const allCategoryNames = Object.keys(productsData);
     const availableItems = [...allProductNames, ...allCategoryNames];
@@ -1077,16 +1079,96 @@ openChatFromPopupBtn.addEventListener('click', () => {
     localStorage.setItem('agentPopupShown', 'true'); // סמן שהוצג
 });
 
+// --- פונקציה לשליפת נתונים מגיליון גוגל ---
+async function fetchProductsFromGoogleSheet() {
+    const spreadsheetId = '1e9gAjJA4e1MY4pATx1wVsx1IJZoD4jzKkcnHRvZKv5s';
+    const sheetName = 'קטלוג מוצרים';
+    const encodedSheetName = encodeURIComponent(sheetName);
+    const url = `https://docs.google.com/spreadsheets/d/${spreadsheetId}/gviz/tq?tqx=out:csv&sheet=${encodedSheetName}`;
+
+    try {
+        const response = await fetch(url);
+        const csvText = await response.text();
+        const lines = csvText.split('\n');
+        // הסר רווחים לבנים וכותרות עמודות ריקות
+        const headers = lines[0].split(',').map(header => header.trim().toLowerCase()).filter(h => h !== '');
+
+        const fetchedProducts = {}; // אובייקט זמני לאחסון המוצרים לפי קטגוריה
+
+        for (let i = 1; i < lines.length; i++) {
+            const currentLine = lines[i].trim();
+            if (!currentLine) continue;
+
+            // פיצול שורה תוך התחשבות בגרשיים
+            const values = [];
+            let inQuote = false;
+            let currentVal = '';
+            for (let j = 0; j < currentLine.length; j++) {
+                const char = currentLine[j];
+                if (char === '"') {
+                    inQuote = !inQuote;
+                } else if (char === ',' && !inQuote) {
+                    values.push(currentVal.trim().replace(/^"|"$/g, '')); // הסר גרשיים סביב ערכים
+                    currentVal = '';
+                } else {
+                    currentVal += char;
+                }
+            }
+            values.push(currentVal.trim().replace(/^"|"$/g, '')); // הוסף את הערך האחרון
+
+            const product = {};
+            headers.forEach((header, index) => {
+                if (values[index] !== undefined) { // וודא שהערך קיים
+                    product[header] = values[index];
+                }
+            });
+
+            // מיפוי נתוני הגיליון למבנה המוצר שלנו
+            // שימוש ב-department כקטגוריה אם קיים, אחרת category, אחרת 'כללי'
+            const category = product.department || product.category || 'כללי';
+            const name = product.title || 'שם לא ידוע';
+            const description = product.description || '';
+            const image = product.image || 'https://placehold.co/120x120/f0f0f0/333333?text=No+Image'; // תמונת פלייס הולדר
+
+            // יצירת ID ייחודי למוצר
+            const id = product['מק"ט'] || `prod_${Math.random().toString(36).substr(2, 9)}`; // השתמש במק"ט כ-ID אם קיים
+
+            if (!fetchedProducts[category]) {
+                fetchedProducts[category] = [];
+            }
+            fetchedProducts[category].push({
+                id: id,
+                name: name,
+                description: description,
+                image: image,
+                // מחיר הוסר בהתאם לבקשתך
+            });
+        }
+        return fetchedProducts;
+
+    } catch (error) {
+        console.error('Error fetching products from Google Sheet:', error);
+        // פאלבק לנתונים הסטטיים אם השליפה נכשלת
+        console.log('Falling back to static products data.');
+        return staticProductsData;
+    }
+}
+
 
 // --- אתחול האפליקציה ---
-window.addEventListener('load', () => {
+window.addEventListener('load', async () => {
     adjustPopupHeight();
     loadSearchHistory();
-    updateRecommendedProducts();
     renderFAQs(); // הצגת שאלות נפוצות בטעינה ראשונית
     renderChatSuggestions(); // הצגת הצעות צ'אט
     renderCarouselImages(); // הצגת תמונות הקרוסלה
     startCarouselInterval(); // הפעלת קרוסלה אוטומטית
+
+    // טעינת נתוני המוצרים מגיליון גוגל
+    productsData = await fetchProductsFromGoogleSheet();
+    console.log('Products Data Loaded:', productsData); // לצרכי דיבוג
+
+    updateRecommendedProducts(); // עדכון המלצות לאחר טעינת המוצרים
     loadCart(); // טעינת סל הקניות עם טעינת העמוד
 
     // טיפול בכפתורי ההודעות המהירות הקיימים
