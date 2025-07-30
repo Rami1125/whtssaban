@@ -716,7 +716,7 @@ chatSendBtn.addEventListener('click', async () => {
                         responseMimeType: "text/plain"
                     }
                 };
-                const apiKey = ""; // API Key is automatically provided by Canvas when left empty
+                const apiKey = "AIzaSyBXLHp-L9dIlCSmPcJZOgHFhDy8CEx0dJU"; // API Key is automatically provided by Canvas when left empty
                 // Changed model to gemini-2.5-flash-preview-05-20 as per instructions
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
 
