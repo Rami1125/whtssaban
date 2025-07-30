@@ -476,8 +476,9 @@ function updateCartDisplay() {
 
     if (cart.length === 0) {
         cartItemsContainer.innerHTML = '<p class="empty-cart-message">הסל שלך ריק כרגע.</p>';
-        cartTotalItems.textContent = '0';
-        cartItemCount.textContent = '0';
+        // Defensive checks before setting textContent
+        if (cartTotalItems) cartTotalItems.textContent = '0';
+        if (cartItemCount) cartItemCount.textContent = '0';
         return;
     }
 
@@ -502,8 +503,9 @@ function updateCartDisplay() {
         totalItemsInCart += item.quantity;
     });
 
-    cartTotalItems.textContent = totalItemsInCart;
-    cartItemCount.textContent = totalItemsInCart;
+    // Defensive checks before setting textContent
+    if (cartTotalItems) cartTotalItems.textContent = totalItemsInCart;
+    if (cartItemCount) cartItemCount.textContent = totalItemsInCart;
 
     // Attach event listeners for quantity and remove buttons
     cartItemsContainer.querySelectorAll('.quantity-minus').forEach(button => {
@@ -714,8 +716,9 @@ chatSendBtn.addEventListener('click', async () => {
                         responseMimeType: "text/plain"
                     }
                 };
-                const apiKey = "";
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                const apiKey = ""; // API Key is automatically provided by Canvas when left empty
+                // Changed model to gemini-2.5-flash-preview-05-20 as per instructions
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
                     method: 'POST',
@@ -919,8 +922,9 @@ async function updateRecommendedProducts() {
                 }
             }
         };
-        const apiKey = "";
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+        const apiKey = ""; // API Key is automatically provided by Canvas when left empty
+        // Changed model to gemini-2.5-flash-preview-05-20 as per instructions
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
 
         const response = await fetch(apiUrl, {
             method: 'POST',
@@ -1088,6 +1092,11 @@ async function fetchProductsFromGoogleSheet() {
 
     try {
         const response = await fetch(url);
+        // Check for non-OK response (e.g., 400, 404, 500)
+        if (!response.ok) {
+            console.error(`HTTP error! status: ${response.status} when fetching from Google Sheet.`);
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const csvText = await response.text();
         const lines = csvText.split('\n');
         // הסר רווחים לבנים וכותרות עמודות ריקות
