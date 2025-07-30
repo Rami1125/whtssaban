@@ -1395,16 +1395,17 @@ body {
 .product-description {
     font-size: 14px;
     color: #666;
-    margin-bottom: 10px; /* קטן יותר כדי לפנות מקום למחיר */
+    margin-bottom: 15px; /* חזר לגודל המקורי */
     flex-grow: 1;
 }
 
-.product-price {
+/* מחיר הוסר מכאן */
+/* .product-price {
     font-size: 16px;
     font-weight: 700;
     color: var(--primary-dark);
     margin-bottom: 15px;
-}
+} */
 
 .add-to-cart-btn {
     background: var(--accent);
@@ -1811,10 +1812,11 @@ body {
     margin-bottom: 5px;
 }
 
-.cart-item-price {
+/* מחיר פריט בסל הוסר */
+/* .cart-item-price {
     font-size: 14px;
     color: #666;
-}
+} */
 
 .cart-item-quantity-controls {
     display: flex;
@@ -2136,9 +2138,10 @@ body {
         font-size: 13px;
     }
 
-    .product-price {
+    /* מחיר מוצר הוסר מכאן */
+    /* .product-price {
         font-size: 14px;
-    }
+    } */
 
     .add-to-cart-btn, .order-product-btn {
         font-size: 14px;
@@ -2197,9 +2200,10 @@ body {
         font-size: 14px;
     }
 
-    .cart-item-price {
+    /* מחיר פריט בסל הוסר */
+    /* .cart-item-price {
         font-size: 12px;
-    }
+    } */
 
     .cart-item-quantity-controls button {
         width: 24px;
