@@ -1105,23 +1105,26 @@ async function fetchProductsFromGoogleSheet() {
         if (Array.isArray(data)) {
             data.forEach(row => {
                 const product = {};
-                // Map column headers to our product structure
-                // Ensure column names from your sheet match these keys (e.g., 'title', 'description', 'image', 'category', 'department', 'מק"ט')
-                product.title = row.title || '';
-                product.description = row.description || '';
-                product.image = row.image || 'https://placehold.co/120x120/f0f0f0/333333?text=No+Image';
-                product.category = row.category || '';
-                product.department = row.department || '';
-                product.makat = row['מק"ט'] || ''; // Assuming 'מק"ט' is the column header for SKU
+                // Normalize keys from Apps Script response and trim values
+                const normalizedRow = {};
+                for (const key in row) {
+                    const normalizedKey = key.trim();
+                    let value = row[key];
+                    if (typeof value === 'string') {
+                        value = value.trim(); // Trim all string values
+                    }
+                    normalizedRow[normalizedKey] = value;
+                }
 
-                // Use department as category if available, otherwise category, otherwise 'General'
-                const category = product.department || product.category || 'כללי';
-                const name = product.title || 'שם לא ידוע';
-                const description = product.description || '';
-                const image = product.image;
+                // Map normalized data to our product structure
+                // Use 'department' or 'category' from the normalized row
+                const category = normalizedRow.department || normalizedRow.category || 'כללי';
+                const name = normalizedRow.title || 'שם לא ידוע';
+                const description = normalizedRow.description || '';
+                const image = normalizedRow.image || 'https://placehold.co/120x120/f0f0f0/333333?text=No+Image';
 
-                // Create unique ID for product
-                const id = product.makat || `prod_${Math.random().toString(36).substr(2, 9)}`; // Use SKU as ID if available
+                // Use the correct key for SKU from the normalized row
+                const id = normalizedRow['מק"ט'] || `prod_${Math.random().toString(36).substr(2, 9)}`;
 
                 if (!fetchedProducts[category]) {
                     fetchedProducts[category] = [];
