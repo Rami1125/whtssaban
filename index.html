@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ח.סבן חומרי בניין - חנות מקצועית</title>
+    <title>ח.סבן חומרי בניין - חנות דגיטאלית</title>
     <!-- ייבוא פונט Rubik לשיפור הקריאות והתאמה למראה המודרני -->
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <!-- ייבוא Font Awesome לאייקונים -->
@@ -84,7 +84,7 @@
                 <a href="https://did.li/8B3TY" class="btn btn-orange" target="_blank">
                     <i class="fas fa-trash-alt btn-icon"></i>
                     <div class="btn-text">פינוי פסולת</div>
-                </a>
+                </a >
 
                 <!-- כפתור קטלוג מוצרים - יוביל לדף הקטלוג הראשי -->
                 <button class="btn btn-neon-magenta" id="openCatalogBtn">
@@ -288,7 +288,7 @@
             <div class="popup-content">
                 <!-- כרטיס סניף התלמיד 6 -->
                 <div class="branch-card">
-                    <iframe class="branch-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3364.3245342509334!2d34.89983887573536!3d32.15740511747278!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151d38257da6385b%3A0x34b1c300a0e4570b!2z15zXqNeZINeo15XXmdeaINeV16HXmdeZICzXldeq15nXlCDXqtei16jXmdeU16jXldec15Qg15XXl9eU!5e0!3m2!1sen!2sil!4v1707823456789" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <iframe class="branch-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3364.3245342509334!2d34.89983887573536!3d32.15740511747278!2m3!1f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151d38257da6385b%3A0x34b1c300a0e4570b!2z15zXqNeZINeo15XXmdeaINeV16HXmdeZICzXldeq15nXlCDXqtei16jXmdeU16jXldec15Qg15XXl9eU!5e0!3m2!1sen!2sil!4v1707823456789" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     <div class="branch-info">
                         <h3 class="branch-name">
                             <i class="fas fa-store"></i>
@@ -389,9 +389,10 @@
             <p class="empty-cart-message">הסל שלך ריק כרגע.</p>
         </div>
         <div class="cart-summary">
+            <!-- סך הכל פריטים במקום סך הכל מחיר -->
             <div class="cart-total">
-                <span>סה"כ:</span>
-                <span id="cartTotalPrice">0.00 ₪</span>
+                <span>סה"כ פריטים:</span>
+                <span id="cartTotalItems">0</span>
             </div>
             <button class="send-order-whatsapp-btn" id="sendOrderWhatsappBtn">
                 <i class="fab fa-whatsapp"></i> שלח הזמנה לוואטסאפ
