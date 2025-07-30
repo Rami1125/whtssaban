@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ח.סבן חומרי בניין - חנות מקצועית</title>
+    <!-- ייבוא פונט Rubik לשיפור הקריאות והתאמה למראה המודרני -->
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <!-- ייבוא Font Awesome לאייקונים -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- קישור לקובץ ה-CSS החיצוני -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- סקשן פתיחה (Splash Screen) -->
+    <div class="splash-screen-overlay" id="splashScreen">
+        <div class="splash-screen-content">
+            <i class="fab fa-whatsapp splash-whatsapp-logo"></i>
+            <div class="splash-text">
+                ברוכים הבאים ל<br>ח.סבן חומרי בניין
+            </div>
+            <!-- אלמנט חדש לספירה לאחור -->
+            <div class="splash-countdown" id="splashCountdown">3</div>
+            <div class="chat-intro-box">
+                <div class="intro-avatar"></div>
+                <div class="intro-agent-name">נציג שירות</div>
+                <div class="intro-status">זמין כעת</div>
+                <div class="intro-message">
+                    שלום 👋 איך אפשר לעזור לך?
+                </div>
+                <button class="start-chat-btn" id="startChatBtn">התכתב עם נציג</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- קונטיינר ראשי המדמה מסך טאבלט -->
+    <div class="tablet-container" id="tabletContainer" style="display: none;">
+        <!-- כותרת עליונה/באנר -->
+        <div class="header-banner">
+            <!-- לוגו מרכזי לחיץ -->
+            <a href="#" id="mainLogoLink" class="main-logo-container">
+                <img src="https://i.postimg.cc/NjhWzHjM/1000101077.jpg" alt="לוגו ח.סבן" class="main-logo">
+            </a>
+            <button class="main-menu-btn" id="mainMenuBtn">
+                <i class="fas fa-bars"></i>
+                תפריט
+            </button>
+            <!-- כפתור סל קניות -->
+            <button class="cart-toggle-btn" id="cartToggleBtn">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-item-count" id="cartItemCount">0</span>
+            </button>
+        </div>
+
+        <!-- אזור התוכן הראשי -->
+        <div class="main-content-area" id="mainContentArea">
+            <!-- כפתורי ניווט ראשיים - גריד עם עיצוב משודרג -->
+            <div class="buttons-grid">
+                <a href="https://rami1125.github.io/Saban94/" class="btn btn-primary" target="_blank">
+                    <i class="fas fa-bolt btn-icon"></i>
+                    <div class="btn-text">הזמנה מהירה</div>
+                </a>
+
+                <a href="https://did.li/fwj6q" class="btn btn-secondary" target="_blank">
+                    <i class="fas fa-pencil-ruler btn-icon"></i>
+                    <div class="btn-text">טופס הצטרפות לקוח</div>
+                </a>
+
+                <button class="btn btn-neon-red" data-initial-message="שלום, מעוניין להזמין מנוף.">
+                    <i class="fas fa-truck-loading btn-icon"></i>
+                    <div class="btn-text">הזמנת מנוף</div>
+                </button>
+
+                <button class="btn btn-neon-yellow" data-initial-message="שלום, מעוניין להזמין משאית.">
+                    <i class="fas fa-truck-moving btn-icon"></i>
+                    <div class="btn-text">הזמנת משאית</div>
+                </button>
+
+                <button class="btn btn-neon-cyan" data-initial-message="שלום, מעוניין להציב מכולה.">
+                    <i class="fas fa-dumpster btn-icon"></i>
+                    <div class="btn-text">הצבת מכולה</div>
+                </button>
+
+                <a href="https://did.li/8B3TY" class="btn btn-orange" target="_blank">
+                    <i class="fas fa-trash-alt btn-icon"></i>
+                    <div class="btn-text">פינוי פסולת</div>
+                </a>
+
+                <!-- כפתור קטלוג מוצרים - יוביל לדף הקטלוג הראשי -->
+                <button class="btn btn-neon-magenta" id="openCatalogBtn">
+                    <i class="fas fa-boxes btn-icon"></i>
+                    <div class="btn-text">קטלוג מוצרים</div>
+                </button>
+
+                <button class="btn btn-primary" data-initial-message="שלום, מעוניין בפרטים על צבעים וכלים סניטריים.">
+                    <i class="fas fa-paint-roller btn-icon"></i>
+                    <div class="btn-text">צבעים וכלים סניטריים</div>
+                </button>
+
+                <button class="btn btn-secondary" data-initial-message="שלום, מעוניין בפרטים על מרצפות ועץ לבניין.">
+                    <i class="fas fa-tree btn-icon"></i>
+                    <div class="btn-text">מרצפות ועץ לבניין</div>
+                </button>
+
+                <button class="btn btn-orange" data-initial-message="שלום, מעוניין בפרטים על חומרי ניקיון במבצע.">
+                    <i class="fas fa-broom btn-icon"></i>
+                    <div class="btn-text">חומרי ניקיון במבצע</div>
+                </button>
+
+                <a href="https://did.li/BVEZH" class="btn btn-purple" target="_blank">
+                    <i class="fas fa-hard-hat btn-icon"></i>
+                    <div class="btn-text">ייעוץ מקצועי</div>
+                </a>
+
+                <button class="btn btn-accent" id="branchesBtn">
+                    <i class="fas fa-map-marker-alt btn-icon"></i>
+                    <div class="btn-text">סניפים</div>
+                </button>
+
+                <button class="btn btn-whatsapp" id="contactBtn">
+                    <i class="fab fa-whatsapp btn-icon"></i>
+                    <div class="btn-text">צור קשר</div>
+                </button>
+            </div>
+
+            <!-- סקשן "אולי יעניין אותך" - המלצות AI -->
+            <div class="recommended-section">
+                <div class="recommended-title">
+                    <i class="fas fa-lightbulb"></i>
+                    אולי יעניין אותך
+                </div>
+                <div class="recommended-products-grid" id="recommendedProducts">
+                    <!-- המלצות יוצגו כאן דינמית -->
+                </div>
+            </div>
+
+            <!-- סקשן "מוצרים חדשים" - קרוסלה מתחלפת -->
+            <div class="new-products-section">
+                <div class="new-products-header">
+                    <a href="#" class="new-products-title" id="newProductsLink">
+                        <i class="fas fa-box-open"></i>
+                        מוצרים חדשים
+                    </a>
+                </div>
+                <div class="carousel-container">
+                    <div class="carousel-images" id="carouselImages">
+                        <!-- תמונות יוצגו כאן דינמית -->
+                    </div>
+                    <button class="carousel-nav-btn prev" id="carouselPrevBtn"><i class="fas fa-chevron-right"></i></button>
+                    <button class="carousel-nav-btn next" id="carouselNextBtn"><i class="fas fa-chevron-left"></i></button>
+                    <div class="carousel-dots" id="carouselDots">
+                        <!-- נקודות ניווט יוצגו כאן דינמית -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- סקשן שאלות נפוצות -->
+            <div class="faq-section">
+                <div class="faq-header">
+                    <h2 class="faq-title">
+                        <i class="fas fa-question-circle"></i>
+                        שאלות נפוצות
+                    </h2>
+                </div>
+                <input type="text" class="faq-search-input" id="faqSearchInput" placeholder="חפש שאלה...">
+                <div class="faq-list" id="faqList">
+                    <!-- שאלות ותשובות יוצגו כאן -->
+                </div>
+            </div>
+        </div>
+
+        <!-- דף קטלוג מוצרים ראשי -->
+        <div class="category-page" id="catalogPage">
+            <div class="category-header">
+                <button class="back-to-home" id="backToMainFromCatalog"><i class="fas fa-arrow-right"></i></button>
+                <h2 class="category-title">קטלוג מוצרים</h2>
+                <div></div> <!-- Placeholder for alignment -->
+            </div>
+            <div class="category-filter-buttons" id="categoryFilterButtons">
+                <!-- כפתורי פילטר לקטגוריות ייווצרו כאן דינמית -->
+            </div>
+            <div class="product-grid" id="mainProductGrid">
+                <!-- כל המוצרים יוצגו כאן או יסוננו לפי קטגוריה -->
+            </div>
+        </div>
+
+        <!-- דפי קטגוריות ספציפיות (יוספו דינמית) -->
+        <div id="categoryPagesContainer"></div>
+    </div>
+
+    <!-- תיבת התכתבות מדמה וואטסאפ -->
+    <div class="whatsapp-chat-container" id="whatsappChatContainer">
+        <div class="chat-header">
+            <button class="close-chat-btn" id="closeChatBtn">×</button>
+            <div class="chat-avatar"></div>
+            <div class="chat-info">
+                <h3>מחלקת שירות לקוחות</h3>
+                <p>זמין כעת</p>
+            </div>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <!-- הודעות צ'אט יוצגו כאן -->
+            <div class="chat-message agent-message">
+                שלום 👋 איך אפשר לעזור לך?
+                <div class="message-avatar"></div>
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <div class="chat-suggestions" id="chatSuggestions">
+                <!-- הצעות יופיעו כאן -->
+            </div>
+            <div class="chat-input-row">
+                <input type="text" class="chat-input" placeholder="כתוב הודעה..." id="chatInput">
+                <button class="chat-send-btn" id="chatSendBtn">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- כפתור WhatsApp קבוע - פותח את תיבת הצ'אט -->
+    <button class="fixed-whatsapp-btn" id="openChatBtn">
+        <i class="fab fa-whatsapp"></i>
+    </button>
+
+    <!-- חלון קופץ לטופס פנייה דינאמי -->
+    <div class="popup-overlay" id="messagePopup">
+        <div class="popup-container">
+            <div class="popup-header">
+                <div class="popup-title">
+                    <i class="fas fa-envelope"></i>
+                    שלח פנייה
+                </div>
+                <button class="close-popup" id="closePopup">×</button>
+            </div>
+
+            <div class="popup-content">
+                <div class="form-group">
+                    <label for="formNameInput">שם מלא:</label>
+                    <input type="text" id="formNameInput" placeholder="הכנס/י שם מלא" autocomplete="name">
+                </div>
+                <div class="form-group">
+                    <label for="formPhoneInput">טלפון:</label>
+                    <input type="tel" id="formPhoneInput" placeholder="הכנס/י מספר טלפון" autocomplete="tel">
+                </div>
+                <div class="form-group">
+                    <label for="formSubjectInput">נושא הפנייה:</label>
+                    <input type="text" id="formSubjectInput" placeholder="לדוגמה: הזמנת מלט, שאלה על מחיר" autocomplete="on">
+                </div>
+                <div class="form-group">
+                    <label for="formMessageInput">שאלה / בקשה:</label>
+                    <textarea id="formMessageInput" placeholder="פרט/י את שאלתך או בקשתך כאן..."></textarea>
+                </div>
+
+                <div class="form-summary" id="formSummary">
+                    <h4><i class="fas fa-clipboard-list"></i> סיכום הפנייה:</h4>
+                    <p id="summaryName">שם: </p>
+                    <p id="summaryPhone">טלפון: </p>
+                    <p id="summarySubject">נושא: </p>
+                    <p id="summaryMessage">בקשה: </p>
+                </div>
+            </div>
+
+            <div class="popup-actions">
+                <button class="popup-btn popup-btn-copy" id="copyFormMessageBtn">
+                    העתק הודעה
+                    <i class="far fa-copy"></i>
+                </button>
+                <button class="popup-btn popup-btn-send" id="sendFormWhatsappBtn">
+                    שלח לוואטסאפ
+                    <i class="fab fa-whatsapp"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- חלון קופץ לסניפים -->
+    <div class="popup-overlay" id="branchesPopup">
+        <div class="popup-container">
+            <div class="popup-header">
+                <div class="popup-title">
+                    <i class="fas fa-map-marked-alt"></i>
+                    סניפי החברה
+                </div>
+                <button class="close-popup" id="closeBranchesPopup">×</button>
+            </div>
+
+            <div class="popup-content">
+                <!-- כרטיס סניף התלמיד 6 -->
+                <div class="branch-card">
+                    <iframe class="branch-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3364.3245342509334!2d34.89983887573536!3d32.15740511747278!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151d38257da6385b%3A0x34b1c300a0e4570b!2z15zXqNeZINeo15XXmdeaINeV16HXmdeZICzXldeq15nXlCDXqtei16jXmdeU16jXldec15Qg15XXl9eU!5e0!3m2!1sen!2sil!4v1707823456789" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <div class="branch-info">
+                        <h3 class="branch-name">
+                            <i class="fas fa-store"></i>
+                            סניף הוד השרון - התלמיד 6
+                        </h3>
+                        <div class="branch-detail">
+                            <i class="fas fa-phone"></i>
+                            <span>טלפון: <a href="tel:09-7602010">09-7602010</a></span>
+                        </div>
+                        <div class="branch-detail">
+                            <i class="fas fa-clock"></i>
+                            <span>שעות פעילות: א'-ה': 06:00-18:00, ו': 06:00-14:00</span>
+                        </div>
+                        <div class="branch-detail">
+                            <i class="fas fa-truck"></i>
+                            <span>שירות הובלות: עד 500 טון, מנופים עד 100 מטר</span>
+                        </div>
+                        <button class="branch-button" onclick="window.open('https://www.google.com/maps/dir/?api=1&destination=32.1574051,34.9024138', '_blank')">
+                            <span>נווט לסניף</span>
+                            <i class="fas fa-directions"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- כרטיס סניף החרש 10 -->
+                <div class="branch-card">
+                    <iframe class="branch-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3364.3288500412585!2d34.8998426155857!3d32.15720128011981!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151d382571234567%3A0xa1b2c3d4e5f67890!2sHaHarash%2010%2C%20Hod%20HaSharon!5e0!3m2!1sen!2sil!4v1707823456789" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <div class="branch-info">
+                        <h3 class="branch-name">
+                            <i class="fas fa-store"></i>
+                            סניף הוד השרון - החרש 10
+                        </h3>
+                        <div class="branch-detail">
+                            <i class="fas fa-phone"></i>
+                            <span>טלפון: <a href="tel:09-7402575">09-7402575</a></span>
+                        </div>
+                        <div class="branch-detail">
+                            <i class="fas fa-clock"></i>
+                            <span>שעות פעילות: א'-ה': 06:30-16:00, ו': 06:30-13:30</span>
+                        </div>
+                        <div class="branch-detail">
+                            <i class="fas fa-warehouse"></i>
+                            <span>איסוף עצמי: חומרים לכל סוגי הבנייה</span>
+                        </div>
+                        <button class="branch-button" onclick="window.open('https://www.google.com/maps/dir/?api=1&destination=32.1572013,34.9020174', '_blank')">
+                            <span>נווט לסניף</span>
+                            <i class="fas fa-directions"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- חלון קופץ חכם לנציגה -->
+    <div class="agent-popup-overlay" id="agentPopupOverlay">
+        <div class="agent-popup">
+            <div class="agent-popup-avatar"></div>
+            <div class="agent-popup-content">
+                <div class="agent-popup-text">
+                    שלום! אני כאן לכל שאלה - רוצה עזרה במציאת מוצר?
+                </div>
+                <button class="agent-popup-btn" id="openChatFromPopupBtn">
+                    פתח תפריט
+                </button>
+            </div>
+            <div class="agent-popup-timer">
+                <div class="agent-popup-timer-fill" id="agentPopupTimerFill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- תפריט ניווט נפתח -->
+    <div class="nav-overlay" id="navOverlay">
+        <div class="nav-menu">
+            <button class="close-nav" id="closeNav">×</button>
+            <ul>
+                <li><a href="#" data-category="חשמל"><i class="fas fa-lightbulb"></i> חשמל</a></li>
+                <li><a href="#" data-category="חומרי בניין"><i class="fas fa-hard-hat"></i> חומרי בניין</a></li>
+                <li><a href="#" data-category="כלי עבודה"><i class="fas fa-tools"></i> כלי עבודה</a></li>
+                <li><a href="#" data-category="מחלקת צבע"><i class="fas fa-paint-brush"></i> מחלקת צבע</a></li>
+                <li><a href="#" data-category="ציוד בטיחות"><i class="fas fa-shield-alt"></i> ציוד בטיחות</a></li>
+                <li><a href="#" data-category="מחלקת גינה"><i class="fas fa-leaf"></i> מחלקת גינה</a></li>
+                <li><a href="#" data-category="שירותי הובלה"><i class="fas fa-truck"></i> שירותי הובלה</a></li>
+                <li><a href="#" data-category="סניפים" id="navBranchesBtn"><i class="fas fa-map-marker-alt"></i> סניפים</a></li>
+                <li><a href="#" id="navCatalogBtn"><i class="fas fa-boxes"></i> קטלוג מוצרים</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- סל קניות צדדי -->
+    <div class="shopping-cart-sidebar" id="shoppingCartSidebar">
+        <div class="cart-header">
+            <h3><i class="fas fa-shopping-cart"></i> סל הקניות שלך</h3>
+            <button class="close-cart-btn" id="closeCartBtn">×</button>
+        </div>
+        <div class="cart-items" id="cartItemsContainer">
+            <!-- פריטי הסל יופיעו כאן -->
+            <p class="empty-cart-message">הסל שלך ריק כרגע.</p>
+        </div>
+        <div class="cart-summary">
+            <div class="cart-total">
+                <span>סה"כ:</span>
+                <span id="cartTotalPrice">0.00 ₪</span>
+            </div>
+            <button class="send-order-whatsapp-btn" id="sendOrderWhatsappBtn">
+                <i class="fab fa-whatsapp"></i> שלח הזמנה לוואטסאפ
+            </button>
+        </div>
+    </div>
+
+    <!-- קישור לקובץ ה-JavaScript החיצוני -->
+    <script src="script.js" defer type="module"></script>
+</body>
+</html>
