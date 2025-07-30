@@ -1,6 +1,6 @@
 import { faqData, newProductsImages, chatSuggestionsData, productsData as staticProductsData } from './data.js';
 
-// אלמנטים כלליים
+// General elements
 const tabletContainer = document.getElementById('tabletContainer');
 const mainContentArea = document.getElementById('mainContentArea');
 const categoryPagesContainer = document.getElementById('categoryPagesContainer');
@@ -12,19 +12,19 @@ const backToMainFromCatalog = document.getElementById('backToMainFromCatalog');
 const mainProductGrid = document.getElementById('mainProductGrid');
 const categoryFilterButtons = document.getElementById('categoryFilterButtons');
 
-// אלמנטים של סקשן פתיחה (Splash Screen)
+// Splash Screen elements
 const splashScreen = document.getElementById('splashScreen');
 const startChatBtn = document.getElementById('startChatBtn');
 const splashCountdown = document.getElementById('splashCountdown');
 
-// אלמנטים של תפריט ניווט
+// Navigation menu elements
 const mainMenuBtn = document.getElementById('mainMenuBtn');
 const navOverlay = document.getElementById('navOverlay');
 const closeNav = document.getElementById('closeNav');
 const navLinks = document.querySelectorAll('.nav-menu ul li a');
 const navCatalogBtn = document.getElementById('navCatalogBtn');
 
-// אלמנטים של חלון קופץ לטופס פנייה (messagePopup משמש כעת לטופס)
+// Dynamic contact form popup elements
 const messagePopup = document.getElementById('messagePopup');
 const closePopup = document.getElementById('closePopup');
 const formNameInput = document.getElementById('formNameInput');
@@ -39,13 +39,13 @@ const summaryMessage = document.getElementById('summaryMessage');
 const copyFormMessageBtn = document.getElementById('copyFormMessageBtn');
 const sendFormWhatsappBtn = document.getElementById('sendFormWhatsappBtn');
 
-// אלמנטים של סניפים
+// Branches elements
 const branchesBtn = document.getElementById('branchesBtn');
 const branchesPopup = document.getElementById('branchesPopup');
 const closeBranchesPopup = document.getElementById('closeBranchesPopup');
 const navBranchesBtn = document.getElementById('navBranchesBtn');
 
-// אלמנטים של צ'אט וואטסאפ מדמה
+// WhatsApp chat simulation elements
 const whatsappChatContainer = document.getElementById('whatsappChatContainer');
 const chatMessages = document.getElementById('chatMessages');
 const chatInput = document.getElementById('chatInput');
@@ -54,15 +54,15 @@ const closeChatBtn = document.getElementById('closeChatBtn');
 const openChatBtn = document.getElementById('openChatBtn');
 const chatSuggestionsContainer = document.getElementById('chatSuggestions');
 
-// אלמנטים של המלצות AI
+// AI recommendations elements
 const recommendedProductsContainer = document.getElementById('recommendedProducts');
-let searchHistory = []; // היסטוריית חיפושים/צפיות של המשתמש
+let searchHistory = []; // User search/view history
 
-// אלמנטים של שאלות נפוצות
+// FAQ elements
 const faqList = document.getElementById('faqList');
 const faqSearchInput = document.getElementById('faqSearchInput');
 
-// אלמנטים של קרוסלת מוצרים חדשים
+// New Products carousel elements
 const carouselImagesContainer = document.getElementById('carouselImages');
 const carouselPrevBtn = document.getElementById('carouselPrevBtn');
 const carouselNextBtn = document.getElementById('carouselNextBtn');
@@ -70,30 +70,30 @@ const carouselDotsContainer = document.getElementById('carouselDots');
 let currentCarouselIndex = 0;
 let carouselInterval;
 
-// אלמנטים של חלון קופץ חכם לנציגה
+// Smart agent popup elements
 const agentPopupOverlay = document.getElementById('agentPopupOverlay');
 const openChatFromPopupBtn = document.getElementById('openChatFromPopupBtn');
 const agentPopupTimerFill = document.getElementById('agentPopupTimerFill');
 
-// אלמנטים של סל קניות
+// Shopping cart elements
 const cartToggleBtn = document.getElementById('cartToggleBtn');
 const shoppingCartSidebar = document.getElementById('shoppingCartSidebar');
 const closeCartBtn = document.getElementById('closeCartBtn');
 const cartItemCount = document.getElementById('cartItemCount');
-const cartTotalItems = document.getElementById('cartTotalItems'); // שינוי: סך הכל פריטים במקום סך הכל מחיר
+const cartTotalItems = document.getElementById('cartTotalItems'); // Changed: total items instead of total price
 const sendOrderWhatsappBtn = document.getElementById('sendOrderWhatsappBtn');
 
-// משתנה גלובלי לסל הקניות
+// Global shopping cart variable
 let cart = [];
-// משתנה גלובלי לנתוני המוצרים שיישלפו מגיליון גוגל
+// Global variable for products data fetched from Google Sheet
 let productsData = {};
 
-// כתובת קבועה לוואטסאפ
-const WHATSAPP_PHONE_NUMBER = '972508860896'; // מספר טלפון בפורמט בינלאומי ללא +
+// Constant WhatsApp phone number
+const WHATSAPP_PHONE_NUMBER = '972508860896'; // International format without +
 
-// --- פונקציות כלליות ---
+// --- General Functions ---
 
-// פונקציית אפקט הקלדה
+// Typing effect function
 function typeMessage(element, text, speed = 40) {
     element.textContent = '';
     let i = 0;
@@ -107,18 +107,18 @@ function typeMessage(element, text, speed = 40) {
     type();
 }
 
-// פונקציה להצגת פופאפ
+// Function to show a popup
 function showPopup(popupElement) {
     popupElement.classList.add('show');
     adjustPopupHeight();
 }
 
-// פונקציה להסתרת פופאפ
+// Function to hide a popup
 function hidePopup(popupElement) {
     popupElement.classList.remove('show');
 }
 
-// התאמת גובה ה-popup-content לגובה המסך
+// Adjust popup content height to screen height
 function adjustPopupHeight() {
     const popups = document.querySelectorAll('.popup-container');
     popups.forEach(popup => {
@@ -133,7 +133,7 @@ function adjustPopupHeight() {
     });
 }
 
-// אנימציות כפתורים בלחיצה ועזיבה
+// Button animations on click and release
 allButtons.forEach(button => {
     button.addEventListener('mousedown', function() {
         this.style.transform = 'scale(0.95)';
@@ -162,21 +162,21 @@ allButtons.forEach(button => {
     });
 });
 
-// --- לוגיקת סקשן פתיחה (Splash Screen) ---
+// --- Splash Screen Logic ---
 function hideSplashScreen() {
     splashScreen.style.opacity = '0';
     setTimeout(() => {
         splashScreen.style.display = 'none';
         tabletContainer.style.display = 'flex';
-        showAgentPopup(); // הצגת הפופאפ של הנציגה לאחר טעינת האתר
-    }, 1000); // תואם לזמן המעבר של ה-opacity
+        showAgentPopup(); // Show agent popup after site loads
+    }, 1000); // Matches opacity transition time
 }
 
 startChatBtn.addEventListener('click', () => {
     hideSplashScreen();
 });
 
-// פונקציית ספירה לאחור אוטומטית למסך הפתיחה
+// Automatic countdown for splash screen
 function startSplashCountdown(duration = 3) {
     let timeLeft = duration;
     splashCountdown.textContent = timeLeft;
@@ -190,7 +190,7 @@ function startSplashCountdown(duration = 3) {
     }, 1000);
 }
 
-// --- לוגיקת תפריט ניווט ---
+// --- Navigation Menu Logic ---
 mainMenuBtn.addEventListener('click', () => {
     navOverlay.classList.add('show');
 });
@@ -199,9 +199,9 @@ closeNav.addEventListener('click', () => {
     navOverlay.classList.remove('show');
 });
 
-// פונקציה להצגת דף קטגוריה (או קטלוג ראשי)
+// Function to display a category page (or main catalog)
 function showPage(pageId, categoryName = null) {
-    // הסתרת כל דפי הקטגוריות והאזורים הראשיים
+    // Hide all category pages and main areas
     document.querySelectorAll('.category-page').forEach(page => page.classList.remove('show'));
     mainContentArea.style.display = 'none';
     catalogPage.classList.remove('show');
@@ -211,7 +211,7 @@ function showPage(pageId, categoryName = null) {
     } else if (pageId === 'catalog') {
         catalogPage.classList.add('show');
         renderProductCatalog(categoryName);
-    } else { // קטגוריה ספציפית
+    } else { // Specific category
         let categoryPage = document.getElementById(`category-${pageId.replace(/\s/g, '-')}`);
         if (!categoryPage) {
             categoryPage = document.createElement('div');
@@ -226,7 +226,7 @@ function showPage(pageId, categoryName = null) {
                 <div></div> <!-- Placeholder for alignment -->
             </div>
             <div class="product-grid">
-                <!-- מוצרים יוצגו כאן -->
+                <!-- Products will be displayed here -->
             </div>
         `;
         categoryPage.classList.add('show');
@@ -238,7 +238,7 @@ function showPage(pageId, categoryName = null) {
     }
 }
 
-// פונקציה לרינדור מוצרים בקטגוריה ספציפית (לשימוש מהתפריט הצדדי)
+// Function to render products in a specific category (for sidebar menu)
 function renderProductsForCategory(categoryName, targetGrid) {
     targetGrid.innerHTML = '';
     const products = productsData[categoryName] || [];
@@ -256,7 +256,7 @@ function renderProductsForCategory(categoryName, targetGrid) {
             <img src="${product.image}" alt="${product.name}" class="product-image" onerror="this.onerror=null;this.src='https://placehold.co/120x120/f0f0f0/333333?text=No+Image';">
             <h3 class="product-name">${product.name}</h3>
             <p class="product-description">${product.description}</p>
-            <!-- מחיר הוסר מכאן -->
+            <!-- Price removed from here -->
             <button class="add-to-cart-btn" data-product-id="${product.id}">
                 הוסף לסל
                 <i class="fas fa-cart-plus"></i>
@@ -268,13 +268,13 @@ function renderProductsForCategory(categoryName, targetGrid) {
         `;
         targetGrid.appendChild(productCard);
 
-        // הוספת אירוע לחיצה לכפתור הוספה לסל
+        // Add click event for add to cart button
         productCard.querySelector('.add-to-cart-btn').addEventListener('click', function() {
             const productId = this.getAttribute('data-product-id');
             const productToAdd = Object.values(productsData).flat().find(p => p.id === productId);
             if (productToAdd) {
                 addToCart(productToAdd);
-                // אנימציית פידבק קצרה
+                // Short feedback animation
                 this.innerHTML = '<i class="fas fa-check"></i> נוסף!';
                 setTimeout(() => {
                     this.innerHTML = 'הוסף לסל <i class="fas fa-cart-plus"></i>';
@@ -282,35 +282,35 @@ function renderProductsForCategory(categoryName, targetGrid) {
             }
         });
 
-        // הוספת אירוע לחיצה לכפתור הזמנה ישירה לוואטסאפ
+        // Add click event for direct WhatsApp order button
         productCard.querySelector('.order-product-btn').addEventListener('click', function() {
             const productId = this.getAttribute('data-product-id');
             const product = Object.values(productsData).flat().find(p => p.id === productId);
             if (product) {
-                const message = `שלום, אני מעוניין להזמין את המוצר:\n*שם*: ${product.name}\n*תיאור*: ${product.description}\nאשמח לפרטים נוספים.`; // מחיר הוסר
+                const message = `שלום, אני מעוניין להזמין את המוצר:\n*שם*: ${product.name}\n*תיאור*: ${product.description}\nאשמח לפרטים נוספים.`; // Price removed
                 const whatsappUrl = `https://wa.me/${WHATSAPP_PHONE_NUMBER}?text=${encodeURIComponent(message)}`;
                 window.open(whatsappUrl, '_blank');
             }
         });
 
-        // הוספת אירוע לחיצה לכפתור הלב (מועדפים)
+        // Add click event for favorite button
         productCard.querySelector('.favorite-btn').addEventListener('click', function() {
             this.classList.toggle('active');
             this.querySelector('i').classList.toggle('far');
             this.querySelector('i').classList.toggle('fas');
-            updateSearchHistory(product.name); // הוספה להיסטוריית חיפושים
-            updateRecommendedProducts(); // עדכון המלצות
+            updateSearchHistory(product.name); // Add to search history
+            updateRecommendedProducts(); // Update recommendations
         });
     });
 }
 
 
-// פונקציה לרינדור הקטלוג הראשי
+// Function to render the main catalog
 function renderProductCatalog(filterCategory = null) {
     mainProductGrid.innerHTML = '';
     categoryFilterButtons.innerHTML = '';
 
-    // יצירת כפתורי פילטר
+    // Create filter buttons
     const allCategories = ['הכל', ...Object.keys(productsData)];
     allCategories.forEach(cat => {
         const filterBtn = document.createElement('button');
@@ -348,7 +348,7 @@ function renderProductCatalog(filterCategory = null) {
             <img src="${product.image}" alt="${product.name}" class="product-image" onerror="this.onerror=null;this.src='https://placehold.co/120x120/f0f0f0/333333?text=No+Image';">
             <h3 class="product-name">${product.name}</h3>
             <p class="product-description">${product.description}</p>
-            <!-- מחיר הוסר מכאן -->
+            <!-- Price removed from here -->
             <button class="add-to-cart-btn" data-product-id="${product.id}">
                 הוסף לסל
                 <i class="fas fa-cart-plus"></i>
@@ -360,7 +360,7 @@ function renderProductCatalog(filterCategory = null) {
         `;
         mainProductGrid.appendChild(productCard);
 
-        // הוספת אירוע לחיצה לכפתור הוספה לסל
+        // Add click event for add to cart button
         productCard.querySelector('.add-to-cart-btn').addEventListener('click', function() {
             const productId = this.getAttribute('data-product-id');
             const productToAdd = Object.values(productsData).flat().find(p => p.id === productId);
@@ -373,30 +373,30 @@ function renderProductCatalog(filterCategory = null) {
             }
         });
 
-        // הוספת אירוע לחיצה לכפתור הזמנה ישירה לוואטסאפ
+        // Add click event for direct WhatsApp order button
         productCard.querySelector('.order-product-btn').addEventListener('click', function() {
             const productId = this.getAttribute('data-product-id');
             const product = Object.values(productsData).flat().find(p => p.id === productId);
             if (product) {
-                const message = `שלום, אני מעוניין להזמין את המוצר:\n*שם*: ${product.name}\n*תיאור*: ${product.description}\nאשמח לפרטים נוספים.`; // מחיר הוסר
+                const message = `שלום, אני מעוניין להזמין את המוצר:\n*שם*: ${product.name}\n*תיאור*: ${product.description}\nאשמח לפרטים נוספים.`; // Price removed
                 const whatsappUrl = `https://wa.me/${WHATSAPP_PHONE_NUMBER}?text=${encodeURIComponent(message)}`;
                 window.open(whatsappUrl, '_blank');
             }
         });
 
-        // הוספת אירוע לחיצה לכפתור הלב (מועדפים)
+        // Add click event for favorite button
         productCard.querySelector('.favorite-btn').addEventListener('click', function() {
             this.classList.toggle('active');
             this.querySelector('i').classList.toggle('far');
             this.querySelector('i').classList.toggle('fas');
-            updateSearchHistory(product.name); // הוספה להיסטוריית חיפושים
-            updateRecommendedProducts(); // עדכון המלצות
+            updateSearchHistory(product.name); // Add to search history
+            updateRecommendedProducts(); // Update recommendations
         });
     });
 }
 
 
-// טיפול בלחיצה על קישורי הניווט
+// Handle clicks on navigation links
 navLinks.forEach(link => {
     link.addEventListener('click', function(e) {
         e.preventDefault();
@@ -407,29 +407,29 @@ navLinks.forEach(link => {
             showPage('catalog');
         }
         else {
-            showPage(category); // פותח דף קטגוריה ספציפי
+            showPage(category); // Open specific category page
         }
-        navOverlay.classList.remove('show'); // סגירת תפריט הניווט
+        navOverlay.classList.remove('show'); // Close navigation menu
     });
 });
 
-// פתיחת דף הקטלוג הראשי מכפתור בדף הבית
+// Open main catalog page from home button
 openCatalogBtn.addEventListener('click', () => {
     showPage('catalog');
 });
 
-// חזרה לדף הבית מהקטלוג הראשי
+// Back to home from main catalog
 backToMainFromCatalog.addEventListener('click', () => {
     showPage('main');
 });
 
-// לוגו ראשי חוזר לדף הבית
+// Main logo returns to home page
 mainLogoLink.addEventListener('click', (e) => {
     e.preventDefault();
     showPage('main');
 });
 
-// --- לוגיקת סל קניות ---
+// --- Shopping Cart Logic ---
 function loadCart() {
     const storedCart = localStorage.getItem('shoppingCart');
     if (storedCart) {
@@ -489,7 +489,7 @@ function updateCartDisplay() {
             <img src="${item.image}" alt="${item.name}" class="cart-item-image" onerror="this.onerror=null;this.src='https://placehold.co/60x60/f0f0f0/333333?text=No+Image';">
             <div class="cart-item-details">
                 <div class="cart-item-name">${item.name}</div>
-                <!-- מחיר פריט בסל הוסר -->
+                <!-- Price removed from cart item -->
             </div>
             <div class="cart-item-quantity-controls">
                 <button class="quantity-minus" data-id="${item.id}">-</button>
@@ -547,9 +547,9 @@ function sendOrderToWhatsApp() {
 
     let orderMessage = "שלום, אני מעוניין להזמין את המוצרים הבאים:\n\n";
     cart.forEach((item, index) => {
-        orderMessage += `${index + 1}. ${item.name} (כמות: ${item.quantity})\n`; // מחיר הוסר
+        orderMessage += `${index + 1}. ${item.name} (כמות: ${item.quantity})\n`; // Price removed
     });
-    orderMessage += `\nסה"כ פריטים: ${cartTotalItems.textContent}\n\n`; // סך הכל פריטים
+    orderMessage += `\nסה"כ פריטים: ${cartTotalItems.textContent}\n\n`; // Total items
     orderMessage += "אשמח לקבל הצעת מחיר ופרטים נוספים.";
 
     const whatsappUrl = `https://wa.me/${WHATSAPP_PHONE_NUMBER}?text=${encodeURIComponent(orderMessage)}`;
@@ -559,7 +559,7 @@ function sendOrderToWhatsApp() {
 // Attach event listeners for cart sidebar
 cartToggleBtn.addEventListener('click', () => {
     shoppingCartSidebar.classList.add('show');
-    updateCartDisplay(); // וודא שהסל מעודכן כשפותחים אותו
+    updateCartDisplay(); // Ensure cart is updated when opened
 });
 
 closeCartBtn.addEventListener('click', () => {
@@ -569,7 +569,7 @@ closeCartBtn.addEventListener('click', () => {
 sendOrderWhatsappBtn.addEventListener('click', sendOrderToWhatsApp);
 
 
-// --- לוגיקת טופס פנייה דינאמי ---
+// --- Dynamic Contact Form Logic ---
 function showDynamicContactForm(initialMessage = '') {
     formNameInput.value = '';
     formPhoneInput.value = '';
@@ -605,7 +605,7 @@ function showDynamicContactForm(initialMessage = '') {
     showPopup(messagePopup);
 }
 
-// עדכון סיכום הטופס בזמן אמת
+// Update form summary in real-time
 function updateFormSummary() {
     summaryName.textContent = `שם: ${formNameInput.value.trim()}`;
     summaryPhone.textContent = `טלפון: ${formPhoneInput.value.trim()}`;
@@ -620,7 +620,7 @@ formMessageInput.addEventListener('input', updateFormSummary);
 
 closePopup.addEventListener('click', () => hidePopup(messagePopup));
 
-// העתקת הודעה מהטופס ללוח הגזירים
+// Copy message from form to clipboard
 copyFormMessageBtn.addEventListener('click', function() {
     const message = `שם: ${formNameInput.value.trim()}\nטלפון: ${formPhoneInput.value.trim()}\nנושא: ${formSubjectInput.value.trim()}\nבקשה: ${formMessageInput.value.trim()}`;
     const textarea = document.createElement('textarea');
@@ -636,7 +636,7 @@ copyFormMessageBtn.addEventListener('click', function() {
     }, 2000);
 });
 
-// שליחת הודעה מהטופס לוואטסאפ
+// Send message from form to WhatsApp
 sendFormWhatsappBtn.addEventListener('click', function() {
     const message = `שלום, זו פנייה מהאתר:\nשם: ${formNameInput.value.trim()}\nטלפון: ${formPhoneInput.value.trim()}\nנושא: ${formSubjectInput.value.trim()}\nבקשה: ${formMessageInput.value.trim()}`;
 
@@ -660,11 +660,11 @@ sendFormWhatsappBtn.addEventListener('click', function() {
     }, 2000);
 });
 
-// --- לוגיקת סניפים ---
+// --- Branches Logic ---
 branchesBtn.addEventListener('click', () => showPopup(branchesPopup));
 closeBranchesPopup.addEventListener('click', () => hidePopup(branchesPopup));
 
-// --- לוגיקת צ'אט וואטסאפ מדמה ---
+// --- WhatsApp Chat Simulation Logic ---
 function addMessageToChat(message, sender) {
     const messageElement = document.createElement('div');
     messageElement.className = `chat-message ${sender}-message`;
@@ -682,7 +682,7 @@ function addMessageToChat(message, sender) {
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
-// הצעות לשאלות בצ'אט
+// Chat suggestions
 function renderChatSuggestions() {
     chatSuggestionsContainer.innerHTML = '';
     chatSuggestionsData.forEach(suggestion => {
@@ -703,7 +703,7 @@ chatSendBtn.addEventListener('click', async () => {
         addMessageToChat(userMessage, 'user');
         chatInput.value = '';
 
-        // ניתוח הודעה והצעת תשובה/הפניה באמצעות AI
+        // Analyze message and suggest answer/redirection using AI
         setTimeout(async () => {
             const prompt = `המשתמש שאל: "${userMessage}". בהתבסס על השאלות הנפוצות הבאות, האם יש תשובה מתאימה?
             ${JSON.stringify(faqData.map(faq => ({ question: faq.question, answer: faq.answer, keywords: faq.keywords })))}
@@ -716,7 +716,7 @@ chatSendBtn.addEventListener('click', async () => {
                         responseMimeType: "text/plain"
                     }
                 };
-                const apiKey = "AIzaSyBXLHp-L9dIlCSmPcJZOgHFhDy8CEx0dJU"; // API Key is automatically provided by Canvas when left empty
+                const apiKey = ""; // API Key is automatically provided by Canvas when left empty
                 // Changed model to gemini-2.5-flash-preview-05-20 as per instructions
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
 
@@ -751,7 +751,7 @@ chatSendBtn.addEventListener('click', async () => {
                 }
 
                 addMessageToChat(agentResponseText, 'agent');
-                // הצעת כפתור שליחה לוואטסאפ עם כל היסטוריית הצ'אט
+                // Offer WhatsApp share button with chat history
                 setTimeout(() => {
                     const shareBtn = document.createElement('button');
                     shareBtn.className = 'popup-btn popup-btn-send';
@@ -806,7 +806,7 @@ chatInput.addEventListener('keypress', (e) => {
     }
 });
 
-// פתיחת וסגירת תיבת הצ'אט
+// Open and close chat box
 openChatBtn.addEventListener('click', () => {
     whatsappChatContainer.classList.add('show');
 });
@@ -815,10 +815,10 @@ closeChatBtn.addEventListener('click', () => {
     whatsappChatContainer.classList.remove('show');
 });
 
-// --- לוגיקת שאלות נפוצות ---
+// --- FAQ Logic ---
 function renderFAQs(filter = '') {
     faqList.innerHTML = '';
-    // סינון שאלות לפי מילות מפתח או טקסט מלא
+    // Filter questions by keywords or full text
     const filteredFaqs = faqData.filter(faq =>
         faq.question.toLowerCase().includes(filter.toLowerCase()) ||
         faq.answer.toLowerCase().includes(filter.toLowerCase()) ||
@@ -851,7 +851,7 @@ function renderFAQs(filter = '') {
             answerElement.classList.toggle('show');
         });
 
-        // כפתור "שלח שאלה חדשה לנציג" פותח וואטסאפ ישירות
+        // "Send new question to agent" button opens WhatsApp directly
         sendNewQuestionBtn.addEventListener('click', function() {
             const questionText = this.getAttribute('data-question-text');
             const message = `שלום, יש לי שאלה לגבי: "${questionText}". אשמח לקבל עזרה.`;
@@ -865,7 +865,7 @@ faqSearchInput.addEventListener('input', (e) => {
     renderFAQs(e.target.value);
 });
 
-// --- לוגיקת המלצות AI ---
+// --- AI Recommendations Logic ---
 function updateSearchHistory(item) {
     if (!searchHistory.includes(item)) {
         searchHistory.push(item);
@@ -884,13 +884,13 @@ async function updateRecommendedProducts() {
     recommendedProductsContainer.innerHTML = '';
 
     const numberOfRecommendations = 6;
-    // וודא ש productsData כבר טעון לפני יצירת availableItems
+    // Ensure productsData is loaded before creating availableItems
     const allProductNames = Object.values(productsData).flat().map(p => p.name);
     const allCategoryNames = Object.keys(productsData);
     const availableItems = [...allProductNames, ...allCategoryNames];
 
     if (searchHistory.length === 0) {
-        // אם אין היסטוריה, הצג מוצרים/קטגוריות אקראיים
+        // If no history, show random products/categories
         const randomItems = availableItems.sort(() => 0.5 - Math.random()).slice(0, numberOfRecommendations);
         randomItems.forEach(itemText => {
             const item = document.createElement('div');
@@ -984,7 +984,7 @@ async function updateRecommendedProducts() {
     }
 }
 
-// --- לוגיקת קרוסלת "מוצרים חדשים" ---
+// --- New Products Carousel Logic ---
 function renderCarouselImages() {
     carouselImagesContainer.innerHTML = '';
     carouselDotsContainer.innerHTML = '';
@@ -1043,7 +1043,7 @@ carouselNextBtn.addEventListener('click', () => {
 function startCarouselInterval() {
     carouselInterval = setInterval(() => {
         moveToSlide(currentCarouselIndex + 1);
-    }, 5000); // החלפת תמונה כל 5 שניות
+    }, 5000); // Change image every 5 seconds
 }
 
 function resetCarouselInterval() {
@@ -1051,9 +1051,9 @@ function resetCarouselInterval() {
     startCarouselInterval();
 }
 
-// --- לוגיקת חלון קופץ חכם לנציגה ---
+// --- Smart Agent Popup Logic ---
 function showAgentPopup() {
-    // בדוק אם הפופאפ הוצג כבר בסשן הנוכחי
+    // Check if popup has already been shown in current session
     if (localStorage.getItem('agentPopupShown') === 'true') {
         return;
     }
@@ -1061,18 +1061,18 @@ function showAgentPopup() {
     agentPopupOverlay.style.opacity = '1';
     agentPopupOverlay.style.pointerEvents = 'all';
 
-    // אנימציית טיימר - תוקן ל-7 שניות
+    // Timer animation - fixed to 7 seconds
     agentPopupTimerFill.style.transition = 'width 7s linear';
     agentPopupTimerFill.style.width = '0%';
 
-    let timer = 7; // תוקן ל-7 שניות
+    let timer = 7; // Fixed to 7 seconds
     const interval = setInterval(() => {
         timer--;
         if (timer <= 0) {
             clearInterval(interval);
             agentPopupOverlay.style.opacity = '0';
             agentPopupOverlay.style.pointerEvents = 'none';
-            localStorage.setItem('agentPopupShown', 'true'); // סמן שהוצג
+            localStorage.setItem('agentPopupShown', 'true'); // Mark as shown
         }
     }, 1000);
 }
@@ -1080,107 +1080,92 @@ function showAgentPopup() {
 openChatFromPopupBtn.addEventListener('click', () => {
     hidePopup(agentPopupOverlay);
     whatsappChatContainer.classList.add('show');
-    localStorage.setItem('agentPopupShown', 'true'); // סמן שהוצג
+    localStorage.setItem('agentPopupShown', 'true'); // Mark as shown
 });
 
-// --- פונקציה לשליפת נתונים מגיליון גוגל ---
+// --- Function to fetch data from Google Sheet via Apps Script ---
 async function fetchProductsFromGoogleSheet() {
-    const spreadsheetId = '1e9gAjJA4e1MY4pATx1wVsx1IJZoD4jzKkcnHRvZKv5s';
-    const sheetName = 'קטלוג מוצרים';
-    const encodedSheetName = encodeURIComponent(sheetName);
-    const url = `https://docs.google.com/spreadsheets/d/${spreadsheetId}/gviz/tq?tqx=out:csv&sheet=${encodedSheetName}`;
+    // NEW Google Apps Script URL
+    const appsScriptUrl = 'https://script.google.com/macros/s/AKfycbyzdkvb4wOMILaPIq-oalk6IRA7UKXCfcsRYW0VPjF5LHO3qYLewgicT8Ua6GCdQnTn/exec';
 
     try {
-        const response = await fetch(url);
+        const response = await fetch(appsScriptUrl);
         // Check for non-OK response (e.g., 400, 404, 500)
         if (!response.ok) {
-            console.error(`HTTP error! status: ${response.status} when fetching from Google Sheet.`);
+            console.error(`HTTP error! status: ${response.status} when fetching from Google Apps Script.`);
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const csvText = await response.text();
-        const lines = csvText.split('\n');
-        // הסר רווחים לבנים וכותרות עמודות ריקות
-        const headers = lines[0].split(',').map(header => header.trim().toLowerCase()).filter(h => h !== '');
+        
+        // Assuming Apps Script returns JSON
+        const data = await response.json();
+        
+        const fetchedProducts = {}; // Temporary object to store products by category
 
-        const fetchedProducts = {}; // אובייקט זמני לאחסון המוצרים לפי קטגוריה
+        // Assuming data is an array of objects, where each object is a row
+        if (Array.isArray(data)) {
+            data.forEach(row => {
+                const product = {};
+                // Map column headers to our product structure
+                // Ensure column names from your sheet match these keys (e.g., 'title', 'description', 'image', 'category', 'department', 'מק"ט')
+                product.title = row.title || '';
+                product.description = row.description || '';
+                product.image = row.image || 'https://placehold.co/120x120/f0f0f0/333333?text=No+Image';
+                product.category = row.category || '';
+                product.department = row.department || '';
+                product.makat = row['מק"ט'] || ''; // Assuming 'מק"ט' is the column header for SKU
 
-        for (let i = 1; i < lines.length; i++) {
-            const currentLine = lines[i].trim();
-            if (!currentLine) continue;
+                // Use department as category if available, otherwise category, otherwise 'General'
+                const category = product.department || product.category || 'כללי';
+                const name = product.title || 'שם לא ידוע';
+                const description = product.description || '';
+                const image = product.image;
 
-            // פיצול שורה תוך התחשבות בגרשיים
-            const values = [];
-            let inQuote = false;
-            let currentVal = '';
-            for (let j = 0; j < currentLine.length; j++) {
-                const char = currentLine[j];
-                if (char === '"') {
-                    inQuote = !inQuote;
-                } else if (char === ',' && !inQuote) {
-                    values.push(currentVal.trim().replace(/^"|"$/g, '')); // הסר גרשיים סביב ערכים
-                    currentVal = '';
-                } else {
-                    currentVal += char;
+                // Create unique ID for product
+                const id = product.makat || `prod_${Math.random().toString(36).substr(2, 9)}`; // Use SKU as ID if available
+
+                if (!fetchedProducts[category]) {
+                    fetchedProducts[category] = [];
                 }
-            }
-            values.push(currentVal.trim().replace(/^"|"$/g, '')); // הוסף את הערך האחרון
-
-            const product = {};
-            headers.forEach((header, index) => {
-                if (values[index] !== undefined) { // וודא שהערך קיים
-                    product[header] = values[index];
-                }
+                fetchedProducts[category].push({
+                    id: id,
+                    name: name,
+                    description: description,
+                    image: image,
+                    // Price removed as per your request
+                });
             });
-
-            // מיפוי נתוני הגיליון למבנה המוצר שלנו
-            // שימוש ב-department כקטגוריה אם קיים, אחרת category, אחרת 'כללי'
-            const category = product.department || product.category || 'כללי';
-            const name = product.title || 'שם לא ידוע';
-            const description = product.description || '';
-            const image = product.image || 'https://placehold.co/120x120/f0f0f0/333333?text=No+Image'; // תמונת פלייס הולדר
-
-            // יצירת ID ייחודי למוצר
-            const id = product['מק"ט'] || `prod_${Math.random().toString(36).substr(2, 9)}`; // השתמש במק"ט כ-ID אם קיים
-
-            if (!fetchedProducts[category]) {
-                fetchedProducts[category] = [];
-            }
-            fetchedProducts[category].push({
-                id: id,
-                name: name,
-                description: description,
-                image: image,
-                // מחיר הוסר בהתאם לבקשתך
-            });
+        } else {
+            console.warn('Google Apps Script response is not an array:', data);
         }
+        
         return fetchedProducts;
 
     } catch (error) {
-        console.error('Error fetching products from Google Sheet:', error);
-        // פאלבק לנתונים הסטטיים אם השליפה נכשלת
+        console.error('Error fetching products from Google Apps Script:', error);
+        // Fallback to static data if fetch fails
         console.log('Falling back to static products data.');
         return staticProductsData;
     }
 }
 
 
-// --- אתחול האפליקציה ---
+// --- Application Initialization ---
 window.addEventListener('load', async () => {
     adjustPopupHeight();
     loadSearchHistory();
-    renderFAQs(); // הצגת שאלות נפוצות בטעינה ראשונית
-    renderChatSuggestions(); // הצגת הצעות צ'אט
-    renderCarouselImages(); // הצגת תמונות הקרוסלה
-    startCarouselInterval(); // הפעלת קרוסלה אוטומטית
+    renderFAQs(); // Display FAQs on initial load
+    renderChatSuggestions(); // Display chat suggestions
+    renderCarouselImages(); // Display carousel images
+    startCarouselInterval(); // Start automatic carousel
 
-    // טעינת נתוני המוצרים מגיליון גוגל
+    // Load product data from Google Sheet (via Apps Script)
     productsData = await fetchProductsFromGoogleSheet();
-    console.log('Products Data Loaded:', productsData); // לצרכי דיבוג
+    console.log('Products Data Loaded:', productsData); // For debugging
 
-    updateRecommendedProducts(); // עדכון המלצות לאחר טעינת המוצרים
-    loadCart(); // טעינת סל הקניות עם טעינת העמוד
+    updateRecommendedProducts(); // Update recommendations after products are loaded
+    loadCart(); // Load shopping cart on page load
 
-    // טיפול בכפתורי ההודעות המהירות הקיימים
+    // Handle existing quick message buttons
     document.querySelectorAll('.btn[data-initial-message]').forEach(button => {
         button.addEventListener('click', function() {
             const initialMessage = this.getAttribute('data-initial-message');
@@ -1188,11 +1173,11 @@ window.addEventListener('load', async () => {
         });
     });
 
-    // טיפול בכפתור "צור קשר"
+    // Handle "Contact Us" button
     document.getElementById('contactBtn').addEventListener('click', function() {
         showDynamicContactForm("שלום, מעוניין בייעוץ מקצועי לגבי המוצרים והשירותים.");
     });
 
-    // הפעלת הספירה לאחור של מסך הפתיחה
-    startSplashCountdown(3); // מתחיל ספירה לאחור מ-3 שניות
+    // Start splash screen countdown
+    startSplashCountdown(3); // Start countdown from 3 seconds
 });
